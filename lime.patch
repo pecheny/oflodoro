@@ -1,0 +1,46 @@
+diff --git a/ndll/Linux/.gitignore b/ndll/Linux/.gitignore
+deleted file mode 100644
+index e69de29b..00000000
+diff --git a/ndll/Linux64/.gitignore b/ndll/Linux64/.gitignore
+deleted file mode 100644
+index e69de29b..00000000
+diff --git a/ndll/Mac/.gitignore b/ndll/Mac/.gitignore
+deleted file mode 100644
+index e69de29b..00000000
+diff --git a/ndll/Mac64/.gitignore b/ndll/Mac64/.gitignore
+deleted file mode 100644
+index e69de29b..00000000
+diff --git a/ndll/Windows/.gitignore b/ndll/Windows/.gitignore
+deleted file mode 100644
+index e69de29b..00000000
+diff --git a/src/lime/_internal/backend/native/NativeAudioSource.hx b/src/lime/_internal/backend/native/NativeAudioSource.hx
+index 07720588..5f42eb54 100644
+--- a/src/lime/_internal/backend/native/NativeAudioSource.hx
++++ b/src/lime/_internal/backend/native/NativeAudioSource.hx
+@@ -321,10 +321,11 @@ class NativeAudioSource
+ 
+ 	private function timer_onRun():Void
+ 	{
+-		if (loops > 0)
++		if (loops != 0)
+ 		{
+-			playing = false;
++			if (loops > 0)
+ 			loops--;
++			playing = false;
+ 			setCurrentTime(0);
+ 			play();
+ 			return;
+@@ -332,10 +333,9 @@ class NativeAudioSource
+ 		else
+ 		{
+ 			stop();
++			completed = true;
++			parent.onComplete.dispatch();
+ 		}
+-
+-		completed = true;
+-		parent.onComplete.dispatch();
+ 	}
+ 
+ 	// Get & Set Methods

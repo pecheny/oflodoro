@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+    <set name="builds_folder" value="."/>
+    <set name="builds_folder" value="/AndroidBuilds" if="android"/>
+    <meta title="WeirdPlatformer" package="com.shoo.wplatf" version="1.0.0" company="pecheny"/>
+
+    <window antialiasing="4"/>
+    <window background="#303030" fps="60" width="200" height="150" unless="html5"/>
+    <window background="#303030" fps="60"  if="html5"/>
+<!--    <app main="RayTest" path="${builds_folder}/Export" file="raytest"/>-->
+    <app main="Main" path="${builds_folder}/Export" file="raytest"/>
+    <!--<window background="#303030" fps="60" orientation="portrait"/>-->
+    <source path="src"/>
+<!--    <source path="lib/openfl-opengl/src"/>-->
+<!--    <source path="lib/alayout/src"/>-->
+<!--    <source path="lib/fsm/src"/>-->
+<!--    <source path="lib/input/src"/>-->
+<!--    <source path="lib/sticky/src"/>-->
+<!--    <source path="lib/sticky/heaps-fonts"/>-->
+<!--    <source path="lib/common/src"/>-->
+
+   <haxelib name="openfl"/>
+<!--    <haxelib name="utils"/>-->
+    <!--<haxelib name="alayout"/>-->
+
+<!--    <haxeflag name="-dce" value="full" />-->
+    <assets path="Assets" include="*"/>
+
+</project>
