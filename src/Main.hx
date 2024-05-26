@@ -14,6 +14,9 @@ class Main extends Sprite {
     var label:TextField;
     public function new() {
         super();
+        var wnd = openfl.Lib.application.window;
+        wnd.x = 64;
+        wnd.y = 200;
 
         SoundHX.addSound("tick", Assets.getSound("Assets/tick-2.wav") );
         SoundHX.addSound("bong", Assets.getSound("Assets/bong-2.wav") );
