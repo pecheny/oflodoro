@@ -1,4 +1,6 @@
 package ;
+import openfl.utils.Assets;
+import treefortress.sound.SoundHX;
 import lime.media.AudioSource;
 import openfl.events.MouseEvent;
 import openfl.media.Sound;
@@ -10,14 +12,12 @@ import openfl.events.Event;
 import openfl.display.Sprite;
 class Main extends Sprite {
     var label:TextField;
-    var tick:AudioSource;
-    var bong:AudioSource;
     public function new() {
         super();
 
-        tick = new AudioSource(lime.utils.Assets.getAudioBuffer("Assets/tick-2.wav"));
-        bong = new AudioSource(lime.utils.Assets.getAudioBuffer("Assets/bong-2.wav"));
-        tick.loops = -1;
+        SoundHX.addSound("tick", Assets.getSound("Assets/tick-2.wav") );
+        SoundHX.addSound("bong", Assets.getSound("Assets/bong-2.wav") );
+        // tick.loops = -1;
         label = new TextField();
         label.mouseEnabled = false;
         label.defaultTextFormat = new TextFormat("Helvetica",64,0xffffff);
@@ -37,9 +37,8 @@ class Main extends Sprite {
     function start(e) {
         if (running)
             return;
-        trace("foo");
         sys.io.File.saveContent("session", DateTools.format(Date.now(), "%T"));
-        tick.play();
+        SoundHX.playLoop("tick");
         endTime = Timer.stamp() + (60 * 45);
         running = true;
     }
@@ -47,7 +46,7 @@ class Main extends Sprite {
 
     function reset() {
         running = false;
-        tick.stop();
+        SoundHX.stop("tick");
         label.text = "00:00";
     }
     function onEnterFrame(e) {
@@ -56,7 +55,8 @@ class Main extends Sprite {
         var remains = endTime - Timer.stamp();
         if (remains <=0) {
             reset();
-            bong.play();
+            // bong.play();
+            SoundHX.play("bong");
             return;
         }
 
