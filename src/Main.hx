@@ -1,5 +1,6 @@
 package;
 
+import haxe.Json;
 import openfl.ui.Keyboard;
 import openfl.events.KeyboardEvent;
 import openfl.utils.Assets;
@@ -42,18 +43,18 @@ class Main extends Sprite {
     }
 
     var remains:Float;
+
     function onKeyDown(e:KeyboardEvent) {
         switch e.keyCode {
-            case Keyboard.SPACE: 
+            case Keyboard.SPACE:
                 if (!running) {
-                    if(endTime < 0) {
+                    if (endTime < 0) {
                         start(null);
                         return;
                     }
                     endTime = remains + Timer.stamp();
                     SoundHX.playLoop("tick");
-                }
-                else {
+                } else {
                     SoundHX.stopAll();
                 }
                 running = !running;
@@ -68,9 +69,16 @@ class Main extends Sprite {
     function start(e) {
         if (running)
             return;
+        var duration = 45;
+        try {
+            var data = sys.io.File.getContent("config.json");
+            var config = Json.parse(data);
+            if (Std.isOfType(config.duration, Int))
+                duration = config.duration;
+        } catch (e:Dynamic) {}
         sys.io.File.saveContent("session", DateTools.format(Date.now(), "%T"));
         SoundHX.playLoop("tick");
-        endTime = Timer.stamp() + (60 * 45);
+        endTime = Timer.stamp() + (60 * duration);
         running = true;
     }
 
